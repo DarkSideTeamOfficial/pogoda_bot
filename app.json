@@ -1,0 +1,22 @@
+{
+  "name": "pogodabot",
+  "description": "Weather Telegram Bot",
+  "repository": "https://github.com/DarkSideTeamOfficial/pogoda_bot",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Telegram Bot Token",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "amount": 1,
+      "size": "S"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/Scalingo/python-buildpack"
+    }
+  ]
+}
