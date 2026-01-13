@@ -457,6 +457,28 @@ async def handle_text(message: Message):
     weather_info = get_weather_json(city)
     await message.answer(weather_info, parse_mode="Markdown")
 
+async def start_bot():
+    """Функция для запуска бота (используется из run.py)"""
+    logging.info("🌤️ Запуск бота прогноза погоды...")
+    
+    try:
+        # Запускаем планировщик уведомлений
+        await start_scheduler(bot)
+        logging.info("📅 Планировщик уведомлений запущен")
+        
+        # Запускаем бота
+        await dp.start_polling(bot)
+    except KeyboardInterrupt:
+        logging.info("\n🛑 Бот остановлен пользователем")
+    except Exception as e:
+        logging.error(f"❌ Ошибка при запуске бота: {e}")
+        raise
+    finally:
+        # Останавливаем планировщик
+        await stop_scheduler()
+        logging.info("📅 Планировщик уведомлений остановлен")
+        await bot.session.close()
+
 async def main():
     """Основная функция для запуска бота"""
     print("🌤️ Запуск бота прогноза погоды...")
